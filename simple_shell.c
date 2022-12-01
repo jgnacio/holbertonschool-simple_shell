@@ -6,6 +6,12 @@
 #include <string.h>
 #include <stdlib.h>
 
+/**
+ * main - runs a very simple shell (a CLI)
+ *
+ * Return: 0 on success (shell was exited with  "exit")
+ */
+
 int main(void)
 {
 	int i, count_delim, child_pid, status;

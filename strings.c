@@ -48,7 +48,7 @@ int _strcmp(char *str1, char *str2)
 
 
 /**
- * strncmp - compare the first n chars of two strings
+ * _strncmp - compare the first n chars of two strings
  * @s1: string 1
  * @s2: string 2
  * @n: compare at most n chars

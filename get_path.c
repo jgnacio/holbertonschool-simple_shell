@@ -1,5 +1,6 @@
 #include "main.h"
 #include "strings.h"
+#include <stdio.h>
 
 /**
  * parse_env_variable - create an array of tokens for an env variable
@@ -27,7 +28,7 @@ char **parse_env_variable(char *var)
 	ar[i++] = tmp;
 	for (tmp = strtok(NULL, ":"); tmp; tmp = strtok(NULL, ":"))
 		ar[i++] = tmp;
-	ar[i] = tmp;
+	ar[i] = NULL;
 
 	return (ar);
 }
@@ -150,3 +151,5 @@ char *path_verify(char **ar_path, char *bin)
 	write(STDOUT_FILENO, &"File not found\n", _strlen("File not found\n"));
 	return (NULL);
 }
+
+

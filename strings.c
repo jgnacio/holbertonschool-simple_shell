@@ -60,7 +60,7 @@ int _strcmp(char *str1, char *str2)
 
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
-	unsigned int i;
+	unsigned int i = 0;
 
 	if (!s1)
 		return (_strncmp("", s2, n));
@@ -87,7 +87,7 @@ int _strncmp(char *s1, char *s2, unsigned int n)
 
 char *_strdup(char *str)
 {
-	int i;
+	int i = 0;
 	char *new = NULL;
 
 	if (!str)
@@ -119,7 +119,7 @@ char *_strdup(char *str)
 
 char *_str_concat(char *s1, char *s2)
 {
-	int i, j;
+	int i = 0, j = 0;
 	char *new = NULL;
 
 	if (s1 == NULL)

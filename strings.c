@@ -1,3 +1,4 @@
+#include "strings.h"
 #include <stdlib.h>
 
 /**
@@ -59,7 +60,7 @@ int _strcmp(char *str1, char *str2)
 
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
-	int i;
+	unsigned int i;
 
 	if (!s1)
 		return (_strncmp("", s2, n));

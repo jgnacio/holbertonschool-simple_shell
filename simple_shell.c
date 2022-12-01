@@ -1,3 +1,4 @@
+#include "strings.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -23,7 +24,7 @@ int main(void)
 	{
 		write(STDOUT_FILENO, &"$ ", 2);
 		check_getline = getline(&str, &len, stdin);
-		if (strcmp(str,"exit\n") == 0 || check_getline == -1)
+		if (_strcmp(str,"exit\n") == 0 || check_getline == (size_t) -1)
 			break;
 
 		for (i = 0, count_delim = 0; str[i]; i++)
@@ -33,7 +34,7 @@ int main(void)
 		ar = malloc(sizeof(char *) * (count_delim + 2));
 		i = 0;
 		ar[i++] = strtok(str, " \n");
-		while (tmp = strtok(NULL, " \n"))
+		for (tmp = strtok(NULL, " \n"); tmp; tmp = strtok(NULL, " \n"))
 			ar[i++] = tmp;
 		ar[i] = tmp;
 

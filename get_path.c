@@ -1,5 +1,5 @@
 #include "main.h"
-#include "string.h"
+#include "strings.h"
 
 /**
  * parse_env_variable - create an array of tokens for an env variable
@@ -17,7 +17,7 @@ char **parse_env_variable(char *var)
 	if (!str)
 		return (NULL);
 
-	for (i = 0, count_delim; str[i]; i++)
+	for (i = 0, count_delim = 0; str[i]; i++)
 		if (str[i] == ':')
 			count_delim++;
 
@@ -25,7 +25,7 @@ char **parse_env_variable(char *var)
 	tmp = strtok(str, ":=");
 	i = 0;
 	ar[i++] = tmp;
-	while (tmp = strtok(NULL, ":"))
+	for (tmp = strtok(NULL, ":"); tmp; tmp = strtok(NULL, ":"))
 		ar[i++] = tmp;
 	ar[i] = tmp;
 
@@ -63,7 +63,6 @@ int find_char(char *string, char searched_char)
 char *find_env_variable(char *searched_var)
 {
 	int i, j;
-	char *str;
 
 	for (i = 0; environ[i]; i++)
 	{

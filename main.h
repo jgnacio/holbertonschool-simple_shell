@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <stdarg.h>
 
+extern char **environ;
 /**
  * struct list_s - singly linked list
  * @str: string - (malloc'ed string)
@@ -22,11 +23,12 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
-extern char **environ;
+/* Prototypes */
 int find_char(char *string, char searched_char);
 char *find_env_variable(char *searched_var);
 char **parse_env_variable(char *var);
 char *path_verify(char **ar_path, char *bin);
-char *path_concat(int cnt_str, char *s1, ...);
+char *mstr_concat(int cnt_str, char *s1, ...);
+list_t *add_node_end(list_t **head, const char *str);
 list_t *makenode(const char *str);
 #endif

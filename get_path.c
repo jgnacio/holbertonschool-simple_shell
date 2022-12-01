@@ -94,7 +94,10 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 
 	va_start(c_str, s1);
 
-	while (cnt_str >= 0)
+	if (!cnt_str)
+		return (NULL);
+
+	while (cnt_str)
 	{
 		if (s1 == NULL)
 		{
@@ -106,11 +109,12 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 		s1 = va_arg(c_str, char *);
 		cnt_str--;
 	}
-	if (str_list)
 
 	concat_buf = malloc(len_strn + 1);
 	if (!concat_buf)
 		return (NULL);
+
+	tmp = str_list;
 
 	while (str_list)
 	{
@@ -119,7 +123,9 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 			concat_buf[j] = s1[i];
 		str_list = str_list->next;
 	}
+	concat_buf[j] = '\0';
 
+	free_list(tmp);
 	return (concat_buf);
 }
 

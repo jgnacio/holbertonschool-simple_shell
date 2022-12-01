@@ -1,14 +1,11 @@
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "main.h"
+#include "path_concat.c"
 
-extern char **environ;
-int find_char(char *string, char searched_char);
-char *find_env_variable(char *searched_var);
-
-
-char *parse_env_variable(char *var)
+/**
+ *
+ *
+ */
+char **parse_env_variable(char *var)
 {
 	char *str, *tmp, **ar;
 	int i, count_delim;
@@ -25,9 +22,10 @@ char *parse_env_variable(char *var)
 		if (str[i] == ':')
 			count_delim++;
 
-	ar = malloc(sizeof(char *) * (count_delim + 2));
-	strtok(str, ":=");
+	ar = malloc(sizeof(char *) * (count_delim + 3));
+	tmp = strtok(str, ":=");
 	i = 0;
+	ar[i++] = tmp;
 	while (tmp = strtok(NULL, ":"))
 		ar[i++] = tmp;
 	ar[i] = tmp;
@@ -35,10 +33,7 @@ char *parse_env_variable(char *var)
 	for (i = 0; ar[i]; i++)
 		printf("[%d] %s\n", i, ar[i]);
 
-	free(str);
-	free(ar);
-
-	return (NULL);
+	return (ar);
 }
 
 char *find_env_variable(char *searched_var)
@@ -71,10 +66,33 @@ int find_char(char *string, char searched_char)
 	return (-1);
 }
 
+char *path_verify(char **ar_path, char *bin)
+{
+	struct stat check;
+	char *bin_path = NULL, *buf = NULL;
+	int i;
+
+	if (!bin)
+		return (NULL);
+
+	buf = path_concat(3, ar_path[1], "/", bin);
+	if (!buf)
+		return (NULL);
+	printf("%s\n", buf);
+	
+	if (stat(bin, &check) == 0)
+		return (bin_path);
+}
+
 int main(void)
 {
 	char *path = find_env_variable("PATH");
+	char **ar_path = NULL;
+	int i = 0;
 
-	parse_env_variable(path);
+	ar_path = parse_env_variable(path);
+
+	path_verify(ar_path, "ls");
+
 	return (0);
 }

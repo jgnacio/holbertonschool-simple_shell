@@ -1,22 +1,22 @@
 #include "main.h"
+#include "string.h"
 #include "path_concat.c"
 
 /**
- *
- *
+ * parse_env_variable - create an array of tokens for an env variable
+ * @var: string from the environ array
+ * 
+ * Return: NULL terminated array of strings (or NULL if malloc failed)
  */
+
 char **parse_env_variable(char *var)
 {
 	char *str, *tmp, **ar;
 	int i, count_delim;
 
-	for (i = 0; var[i]; i++)
-		continue;
-
-	str = malloc(i + 1);
-	for (i = 0; var[i]; i++)
-		str[i] = var[i];
-	str[i] = '\0';
+	str = _strdup(var);
+	if (!str)
+		return (NULL);
 
 	for (i = 0, count_delim; str[i]; i++)
 		if (str[i] == ':')
@@ -30,11 +30,15 @@ char **parse_env_variable(char *var)
 		ar[i++] = tmp;
 	ar[i] = tmp;
 
-	for (i = 0; ar[i]; i++)
-		printf("[%d] %s\n", i, ar[i]);
-
 	return (ar);
 }
+
+/**
+ * find_env_variable - find a variable in environ
+ * @searched_var: searched variable ('key', if the string is 
+ * 'key=value')
+ * Return: the found string
+ */
 
 char *find_env_variable(char *searched_var)
 {
@@ -47,12 +51,20 @@ char *find_env_variable(char *searched_var)
 		if (j < 0)
 			return (NULL);
 
-		if (strncmp(environ[i], searched_var, (size_t) j - 1) == 0)
+		if (_strncmp(environ[i], searched_var, j - 1) == 0)
 			return (environ[i]);
 	}
 
 	return (NULL);
 }
+
+/**
+ * find_char - find the first occurrance of a char in a str
+ * @string: self explanatory
+ * @searched_char: char to look for
+ *
+ * Return: index of char, or -1 if not found
+ */
 
 int find_char(char *string, char searched_char)
 {
@@ -65,6 +77,7 @@ int find_char(char *string, char searched_char)
 	}
 	return (-1);
 }
+
 
 char *path_verify(char **ar_path, char *bin)
 {

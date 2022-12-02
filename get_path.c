@@ -1,6 +1,5 @@
 #include "main.h"
 #include "strings.h"
-#include <stdio.h>
 
 /**
  * parse_env_variable - create an array of tokens for an env variable
@@ -85,7 +84,6 @@ char *find_env_variable(char *searched_var)
  *
  * Return: strings concatenates.
  */
-/*
 char *mstr_concat(int cnt_str, char *s1, ...)
 {
 	int len_strn = 0, i = 0, j = 0;
@@ -129,7 +127,6 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 	free_list(tmp);
 	return (concat_buf);
 }
-*/
 /**
  * path_verify - check if an executable exists
  * @ar_path: array of directories in PATH
@@ -137,26 +134,27 @@ char *mstr_concat(int cnt_str, char *s1, ...)
  *
  * Return: a str that can be executed with execve
  */
-/*
-char *path_verify(char **ar_path, char *bin)
+char *path_verify(char **ar_path, char *filename)
 {
 	struct stat check;
 	char *buf = NULL;
 	int i;
 
-	if (!bin || !ar_path)
+	if (!filename || !ar_path)
 		return (NULL);
+
+	if (stat(filename, &check) == 0)
+		return (filename);
+
 	for (i = 1; ar_path[i]; i++)
 	{
-		buf = mstr_concat(3, ar_path[i], "/", bin);
+		buf = mstr_concat(3, ar_path[i], "/", filename);
 		if (!buf)
 			return (NULL);
-		if (stat(bin, &check) == 0)
+		if (stat(buf, &check) == 0)
 			return (buf);
 		free(buf);
 	}
 	write(STDOUT_FILENO, &"File not found\n", _strlen("File not found\n"));
 	return (NULL);
 }
-*/
-

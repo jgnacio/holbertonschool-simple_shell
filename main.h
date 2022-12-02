@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <stdarg.h>
+#include "strings.h"
 
 extern char **environ;
 /**
@@ -29,6 +30,7 @@ char *find_env_variable(char *searched_var);
 char **parse_env_variable(char *var);
 char *path_verify(char **ar_path, char *bin);
 char *mstr_concat(int cnt_str, char *s1, ...);
-list_t *add_node_end(list_t **head, const char *str);
-list_t *makenode(const char *str);
+list_t *add_node_end(list_t **head, char *str);
+list_t *makenode(char *str);
+void free_list(list_t *head);
 #endif

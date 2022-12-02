@@ -1,4 +1,5 @@
 #include "strings.h"
+#include "main.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -17,7 +18,7 @@ int main(void)
 {
 	int i, count_delim, child_pid, status;
 	size_t len = 0, check_getline;
-	char *str = NULL, *tmp = NULL, **ar;
+	char *str = NULL, *tmp = NULL, **ar = NULL, **a_path = NULL;
 	struct stat statbuffer;
 
 	while (1)
@@ -38,13 +39,29 @@ int main(void)
 			ar[i++] = tmp;
 		ar[i] = tmp;
 
+		/*
 		if (stat(ar[0], &statbuffer) != 0)
 		{
 			printf("Error: File not found\nExiting...\n");
 			break;
 		}
+		*/
+		a_path = parse_env_variable(find_env_variable("PATH"));
+
+		tmp = path_verify(a_path, ar[0]);
+		if (!tmp)
+		{
+			free(str);
+			free(ar);
+			free(a_path);
+			printf("not found");
+			continue;
+		}
+
+		printf("%s\n", tmp);
+
 		child_pid = fork();
-		(child_pid != 0) ? wait(&status) : execve(ar[0], ar, NULL);
+		(child_pid != 0) ? wait(&status) : execve(tmp, ar, environ);
 		free(str);
 		free(ar);
 	}

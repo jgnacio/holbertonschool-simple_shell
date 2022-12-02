@@ -85,6 +85,7 @@ char *find_env_variable(char *searched_var)
  *
  * Return: strings concatenates.
  */
+/*
 char *mstr_concat(int cnt_str, char *s1, ...)
 {
 	int len_strn = 0, i = 0, j = 0;
@@ -128,7 +129,7 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 	free_list(tmp);
 	return (concat_buf);
 }
-
+*/
 /**
  * path_verify - check if an executable exists
  * @ar_path: array of directories in PATH
@@ -136,7 +137,7 @@ char *mstr_concat(int cnt_str, char *s1, ...)
  *
  * Return: a str that can be executed with execve
  */
-
+/*
 char *path_verify(char **ar_path, char *bin)
 {
 	struct stat check;
@@ -157,5 +158,5 @@ char *path_verify(char **ar_path, char *bin)
 	write(STDOUT_FILENO, &"File not found\n", _strlen("File not found\n"));
 	return (NULL);
 }
-
+*/
 

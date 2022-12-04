@@ -54,6 +54,9 @@ int main(void)
 			free(str);
 			free(ar);
 			free(a_path);
+			str = NULL;
+			ar = NULL;
+			a_path = NULL;
 			printf("not found");
 			continue;
 		}
@@ -64,6 +67,9 @@ int main(void)
 		(child_pid != 0) ? wait(&status) : execve(tmp, ar, environ);
 		free(str);
 		free(ar);
+		str = NULL;
+		ar = NULL;
+		a_path = NULL;
 	}
 	return (0);
 }

@@ -12,7 +12,7 @@ $(NAME): $(SRC)
 %.c: $(DEPS)
 
 run:
-	valgrind -s --leak-check=full ./$(NAME)
+	valgrind -s --track-origins=yes --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 .PHONY: clean
 clean: ; $(RM) ./$(NAME)

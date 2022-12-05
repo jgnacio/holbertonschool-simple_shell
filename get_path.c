@@ -70,7 +70,7 @@ char *find_env_variable(char *searched_var)
 		if (j < 0)
 			return (NULL);
 
-		if (_strncmp(environ[i], searched_var, (unsigned int) j - 1) == 0)
+		if (_strncmp(environ[i], searched_var, (unsigned int) j) == 0)
 			return (environ[i]);
 	}
 
@@ -130,7 +130,7 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 /**
  * path_verify - check if an executable exists
  * @ar_path: array of directories in PATH
- * @bin: command passed
+ * @filename: command passed
  *
  * Return: a str that can be executed with execve
  */

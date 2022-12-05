@@ -22,9 +22,9 @@ int main(void)
 
 	while (1)
 	{
-		write(STDOUT_FILENO, &"$ ", 2);
+		write(STDOUT_FILENO, "$ ", 2);
 		check_getline = getline(&str, &len, stdin);
-		if (_strcmp(str,"exit\n") == 0 || check_getline == (size_t) -1)
+		if (_strcmp(str, "exit\n") == 0 || check_getline == (size_t) -1)
 		{
 			free(str);
 			break;
@@ -37,12 +37,12 @@ int main(void)
 		ar = malloc(sizeof(char *) * (count_delim + 2));
 		i = 0;
 		ar[i++] = strtok(str, " \n");
+		/* Hay algun error por aca */
 		for (tmp = strtok(NULL, " \n"); tmp; tmp = strtok(NULL, " \n"))
 			ar[i++] = tmp;
-		ar[i] = tmp;
+		ar[i] = NULL;
 
-		a_path = parse_env_variable(find_env_variable("PATH"));
-
+		a_path = parse_env_variable(find_env_variable("PATH="));
 		tmp = path_verify(a_path, ar[0]);
 		if (!tmp)
 		{
@@ -62,6 +62,7 @@ int main(void)
 		free(ar);
 		free(a_path[0]);
 		free(a_path);
+		free(tmp);
 		str = NULL;
 		ar = NULL;
 		a_path = NULL;

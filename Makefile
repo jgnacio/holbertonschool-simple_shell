@@ -1,6 +1,6 @@
 CC = gcc
-SRC = simple_shell.c get_path.c strings.c add_node_end.c
-DEPS = main.h strings.h
+SRC = simple_shell.c get_path.c strings.c node_functions.c
+DEPS = path.h strings.h node.h
 NAME = hsh
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89 -g
 
@@ -12,7 +12,7 @@ $(NAME): $(SRC)
 %.c: $(DEPS)
 
 run:
-	valgrind ./$(NAME) -s -leak_check=full
+	valgrind -s --leak-check=full ./$(NAME)
 
 .PHONY: clean
 clean: ; $(RM) ./$(NAME)

@@ -17,10 +17,8 @@ int _strlen(char *str)
 
 	for (i = 0; str[i]; i++)
 		continue;
-
 	return (i);
 }
-
 
 /**
  * _strcmp - compares two strings
@@ -97,10 +95,9 @@ char *_strdup(char *str)
 		continue;
 
 	new = malloc(i + 1);
-
 	if (!new)
 		return (NULL);
-
+	
 	new[i] = '\0';
 	for (i = 0; str[i]; i++)
 		new[i] = str[i];
@@ -123,9 +120,9 @@ char *_str_concat(char *s1, char *s2)
 	char *new = NULL;
 
 	if (s1 == NULL)
-		return (_str_concat("", s2));
+		s1 = "";
 	if (s2 == NULL)
-		return (_str_concat(s1, ""));
+		s2 = "";
 
 	i = _strlen(s1);
 	j = _strlen(s2);
@@ -133,12 +130,12 @@ char *_str_concat(char *s1, char *s2)
 	new = malloc(i + j + 1);
 	if (!new)
 		return (NULL);
-
 	for (i = 0; s1[i]; i++)
 		new[i] = s1[i];
 
 	for (j = 0; s2[j]; j++)
 		new[i + j] = s2[j];
 
+	new[i + j] = '\0';
 	return (new);
 }

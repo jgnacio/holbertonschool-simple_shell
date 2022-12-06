@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include "strings.h"
 
 extern char **environ;
@@ -33,4 +34,8 @@ char *mstr_concat(int cnt_str, char *s1, ...);
 list_t *add_node_end(list_t **head, char *str);
 list_t *makenode(char *str);
 void free_list(list_t *head);
+void freedom(unsigned int n, ...);
+char **parse_str(char *s, char *delim);
+int in(char c, char *s);
+
 #endif

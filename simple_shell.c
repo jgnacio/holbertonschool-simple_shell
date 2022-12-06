@@ -16,52 +16,36 @@
 
 int main(void)
 {
-	int i, count_delim, child_pid, status;
+	int child_pid, status;
 	size_t len = 0, check_getline;
-	char *str = NULL, *tmp = NULL, **ar = NULL, **a_path = NULL;
+	char *str = NULL, **ar = NULL, **a_path = NULL;
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		check_getline = getline(&str, &len, stdin);
 
-		for (i = 1, count_delim = 0; str[i]; i++)
-			if (str[i] == ' ' && (str[i] > 32 && str[i] < 127))
-				count_delim++;
-
-		ar = malloc(sizeof(char *) * (count_delim + 3));
-		i = 0;
-		ar[i++] = strtok(str, " \t\n");
-
-		for (tmp = strtok(NULL, " \t\n"); tmp; tmp = strtok(NULL, " \t\n"))
-			ar[i++] = tmp;
-		ar[i] = NULL;
+		ar = parse_str(str, " \t\n");
 
 		if (_strcmp(ar[0], "exit") == 0 || check_getline == (size_t) -1)
 		{
-			free(ar[0]);
-			free(ar);
+			freedom(2, &str, &ar);
 			break;
 		}
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
-		tmp = path_verify(a_path, ar[0]);
-		if (!tmp)
+		ar[0] = path_verify(a_path, ar[0]);
+
+		if (!ar[0])
 		{
-			free(str), str = NULL;
-			free(ar), ar = NULL;
-			free(a_path[0]), a_path[0] = NULL;
-			free(a_path), a_path = NULL;
+			freedom(4, &str, &ar, &a_path[0], &a_path);
 			continue;
 		}
 
 		child_pid = fork();
-		(child_pid != 0) ? wait(&status) : execve(tmp, ar, environ);
-		free(str), str = NULL;
-		free(ar), ar = NULL;
-		free(a_path[0]), a_path[0] = NULL;
-		free(a_path), a_path = NULL;
-		free(tmp), tmp = NULL;
+		(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
+
+		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}
 	return (0);
 }

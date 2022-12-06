@@ -8,5 +8,6 @@ int _strcmp(char *str1, char *str2);
 int _strncmp(char *s1, char *s2, unsigned int n);
 char *_strdup(char *str);
 char *_str_concat(char *s1, char *s2);
+char *ltrim(char *s);
 
 #endif

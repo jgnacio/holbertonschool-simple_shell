@@ -97,7 +97,7 @@ char *_strdup(char *str)
 	new = malloc(i + 1);
 	if (!new)
 		return (NULL);
-	
+
 	new[i] = '\0';
 	for (i = 0; str[i]; i++)
 		new[i] = str[i];

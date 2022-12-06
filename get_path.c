@@ -144,7 +144,9 @@ char *path_verify(char **ar_path, char *filename)
 		return (NULL);
 
 	if (stat(filename, &check) == 0)
-		return (filename);
+	{	buf = _strdup(filename);
+		return (buf);
+	}
 
 	for (i = 1; ar_path[i]; i++)
 	{
@@ -155,6 +157,9 @@ char *path_verify(char **ar_path, char *filename)
 			return (buf);
 		free(buf);
 	}
-	write(STDOUT_FILENO, &"File not found\n", _strlen("File not found\n"));
+	write(STDOUT_FILENO, "./hsh: 1: ", _strlen("./hsh: 1: "));
+	for (i = 0; filename[i]; i++)
+		write(STDOUT_FILENO, &filename[i], 1);
+	write(STDOUT_FILENO, ": not found\n", _strlen(": not found\n"));
 	return (NULL);
 }

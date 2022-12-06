@@ -34,11 +34,11 @@ int main(void)
 			if (str[i] == ' ' && (str[i] > 32 && str[i] < 127))
 				count_delim++;
 
-		ar = malloc(sizeof(char *) * (count_delim + 2));
+		ar = malloc(sizeof(char *) * (count_delim + 3));
 		i = 0;
-		ar[i++] = strtok(str, " \n");
-		/* Hay algun error por aca */
-		for (tmp = strtok(NULL, " \n"); tmp; tmp = strtok(NULL, " \n"))
+		ar[i++] = strtok(str, " \t\n");
+
+		for (tmp = strtok(NULL, " \t\n"); tmp; tmp = strtok(NULL, " \t\n"))
 			ar[i++] = tmp;
 		ar[i] = NULL;
 
@@ -46,26 +46,21 @@ int main(void)
 		tmp = path_verify(a_path, ar[0]);
 		if (!tmp)
 		{
-			free(str);
-			free(ar);
-			free(a_path[0]);
-			free(a_path);
-			str = NULL;
-			ar = NULL;
-			a_path = NULL;
+			free(str), str = NULL;
+			free(ar), ar = NULL;
+			free(a_path[0]), a_path[0] = NULL;
+			free(a_path), a_path = NULL;
 			continue;
 		}
 
 		child_pid = fork();
 		(child_pid != 0) ? wait(&status) : execve(tmp, ar, environ);
-		free(str);
-		free(ar);
-		free(a_path[0]);
-		free(a_path);
-		free(tmp);
-		str = NULL;
-		ar = NULL;
-		a_path = NULL;
+		free(str), str = NULL;
+		free(ar), ar = NULL;
+		free(a_path[0]), a_path[0] = NULL;
+		free(a_path), a_path = NULL;
+		free(tmp), tmp = NULL;
 	}
 	return (0);
 }
+

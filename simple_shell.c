@@ -24,35 +24,37 @@ int main(void)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		check_getline = getline(&str, &len, stdin);
-		if (_strcmp(str, "exit\n") == 0 || check_getline == (size_t) -1)
-		{
-			free(str);
-			break;
-		}
 
 		for (i = 0, count_delim = 0; str[i]; i++)
 			if (str[i] == ' ' && (str[i] > 32 && str[i] < 127))
 				count_delim++;
 
-		ar = malloc(sizeof(char *) * (count_delim + 2));
+		ar = malloc(sizeof(char *) * (count_delim + 3));
 		i = 0;
-		ar[i++] = strtok(str, " \n");
-		/* Hay algun error por aca */
-		for (tmp = strtok(NULL, " \n"); tmp; tmp = strtok(NULL, " \n"))
+		ar[i++] = strtok(str, " \t\n");
+		for (tmp = strtok(NULL, " \t\n"); tmp; tmp = strtok(NULL, " \t\n"))
 			ar[i++] = tmp;
 		ar[i] = NULL;
+
+		if (_strcmp(ar[0], "exit") == 0 || check_getline == (size_t) -1)
+		{
+			free(ar[0]);
+			break;
+		}
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
 		tmp = path_verify(a_path, ar[0]);
 		if (!tmp)
 		{
-			free(str);
+			free(ar[0]);
 			free(ar);
 			free(a_path[0]);
 			free(a_path);
+			free(tmp);
 			str = NULL;
 			ar = NULL;
 			a_path = NULL;
+			tmp = NULL;
 			continue;
 		}
 
@@ -66,6 +68,27 @@ int main(void)
 		str = NULL;
 		ar = NULL;
 		a_path = NULL;
+		tmp = NULL;
 	}
 	return (0);
+}
+
+/**
+ *
+ *
+ *
+ */
+void free_all(int n, ...)
+{
+	void *p;
+	va_list ap;
+
+	va_start(ap, n);
+	for (; n; n--)
+	{
+		p = va_arg(ap, void *);
+		if (p)
+			free(p);
+		p = NULL;
+	}
 }

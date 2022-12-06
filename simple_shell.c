@@ -24,13 +24,8 @@ int main(void)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		check_getline = getline(&str, &len, stdin);
-		if (_strcmp(str, "exit\n") == 0 || check_getline == (size_t) -1)
-		{
-			free(str);
-			break;
-		}
 
-		for (i = 0, count_delim = 0; str[i]; i++)
+		for (i = 1, count_delim = 0; str[i]; i++)
 			if (str[i] == ' ' && (str[i] > 32 && str[i] < 127))
 				count_delim++;
 
@@ -41,6 +36,13 @@ int main(void)
 		for (tmp = strtok(NULL, " \t\n"); tmp; tmp = strtok(NULL, " \t\n"))
 			ar[i++] = tmp;
 		ar[i] = NULL;
+
+		if (_strcmp(ar[0], "exit") == 0 || check_getline == (size_t) -1)
+		{
+			free(ar[0]);
+			free(ar);
+			break;
+		}
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
 		tmp = path_verify(a_path, ar[0]);

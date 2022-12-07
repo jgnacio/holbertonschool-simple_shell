@@ -21,10 +21,22 @@ int main(int __attribute__ ((unused)) ac, char **av)
 	size_t len = 0, check_getline;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
+	sigset_t block_set;
+	sigemptyset(&block_set);
+	sigaddset(&block_set, SIGINT);
+	
+	sigprocmask(SIG_BLOCK, &block_set, NULL);
+
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 		check_getline = getline(&str, &len, stdin);
+
+		if (check_getline == (size_t) -1)
+		{
+			freedom(1, &str,&ar);
+			break;
+		}
 
 		ar = parse_str(str, " \t\n");
 
@@ -44,7 +56,12 @@ int main(int __attribute__ ((unused)) ac, char **av)
 		}
 
 		child_pid = fork();
-		(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
+		if (child_pid != 0)
+			wait(&status);
+		else
+		{
+			execve(ar[0], ar, environ);
+		}
 
 		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}

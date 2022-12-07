@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "main.h"
+#include <signal.h>
 
 /**
  * freedom - free multiple pointers
@@ -81,4 +82,13 @@ int in(char c, char *s)
 		if (c == s[i])
 			return (1);
 	return (0);
+}
+
+/**
+ *
+ *
+ */
+void sighandler(__attribute__ ((unused)) int sig)
+{
+	write(STDOUT_FILENO, &"\n$ ", 3);
 }

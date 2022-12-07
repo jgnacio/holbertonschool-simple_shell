@@ -7,7 +7,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
 
+void sighandler(int signum);
 /**
  * main - runs a very simple shell (a CLI)
  * @ac: argument count
@@ -20,25 +22,23 @@ int main(int __attribute__ ((unused)) ac, char **av)
 	int child_pid, status;
 	size_t len = 0, check_getline;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
-	sigset_t block_set;
-
-	sigemptyset(&block_set);
-	sigaddset(&block_set, SIGINT);
-	sigprocmask(SIG_BLOCK, &block_set, NULL);
+	
+	signal(SIGINT, sighandler);
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
+
 		check_getline = getline(&str, &len, stdin);
 
 		if (check_getline == (size_t) -1)
 		{
-			freedom(1, &str, &ar);
+			freedom(1, &str);
 			break;
 		}
 
 		ar = parse_str(str, " \t\n");
-		if (_strcmp(ar[0], "exit") == 0 || check_getline == (size_t) -1)
+		if (_strcmp(ar[0], "exit") == 0)
 		{
 			freedom(2, &str, &ar);
 			break;

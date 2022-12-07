@@ -29,7 +29,7 @@ typedef struct list_s
 int find_char(char *string, char searched_char);
 char *find_env_variable(char *searched_var);
 char **parse_env_variable(char *var);
-char *path_verify(char **ar_path, char *bin);
+char *path_verify(char **ar_path, char *filename, char *exec_name);
 char *mstr_concat(int cnt_str, char *s1, ...);
 list_t *add_node_end(list_t **head, char *str);
 list_t *makenode(char *str);

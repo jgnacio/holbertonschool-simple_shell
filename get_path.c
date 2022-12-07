@@ -131,10 +131,11 @@ char *mstr_concat(int cnt_str, char *s1, ...)
  * path_verify - check if an executable exists
  * @ar_path: array of directories in PATH
  * @filename: command passed
+ * @exec_name: name of executable
  *
  * Return: a str that can be executed with execve
  */
-char *path_verify(char **ar_path, char *filename)
+char *path_verify(char **ar_path, char *filename, char *exec_name)
 {
 	struct stat check;
 	char *buf = NULL;
@@ -157,7 +158,11 @@ char *path_verify(char **ar_path, char *filename)
 			return (buf);
 		free(buf);
 	}
-	write(STDOUT_FILENO, "./hsh: 1: ", _strlen("./hsh: 1: "));
+	for (i = 0; exec_name[i]; i++)
+		write(STDOUT_FILENO, &exec_name[i], 1);
+
+	write(STDOUT_FILENO, ": 1: ", _strlen(": 1: "));
+
 	for (i = 0; filename[i]; i++)
 		write(STDOUT_FILENO, &filename[i], 1);
 	write(STDOUT_FILENO, ": not found\n", _strlen(": not found\n"));

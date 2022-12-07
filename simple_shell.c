@@ -10,11 +10,12 @@
 
 /**
  * main - runs a very simple shell (a CLI)
- *
+ * @ac: argument count
+ * @av: NULL terminated array of arguments as str
  * Return: 0 on success (shell was exited with  "exit")
  */
 
-int main(void)
+int main(int __attribute__ ((unused)) ac, char **av)
 {
 	int child_pid, status;
 	size_t len = 0, check_getline;
@@ -34,7 +35,7 @@ int main(void)
 		}
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
-		ar[0] = path_verify(a_path, ar[0]);
+		ar[0] = path_verify(a_path, ar[0], av[0]);
 
 		if (!ar[0])
 		{

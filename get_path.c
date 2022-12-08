@@ -1,3 +1,9 @@
+#include <stdlib.h>
+#include <stdarg.h>
+#include <stddef.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <string.h>
 #include "main.h"
 #include "strings.h"
 
@@ -127,6 +133,8 @@ char *mstr_concat(int cnt_str, char *s1, ...)
 	free_list(tmp);
 	return (concat_buf);
 }
+
+
 /**
  * path_verify - check if an executable exists
  * @ar_path: array of directories in PATH
@@ -159,12 +167,12 @@ char *path_verify(char **ar_path, char *filename, char *exec_name)
 		free(buf);
 	}
 	for (i = 0; exec_name[i]; i++)
-		write(STDOUT_FILENO, &exec_name[i], 1);
+		write(STDERR_FILENO, &exec_name[i], 1);
 
-	write(STDOUT_FILENO, ": 1: ", _strlen(": 1: "));
+	write(STDERR_FILENO, ": 1: ", _strlen(": 1: "));
 
 	for (i = 0; filename[i]; i++)
-		write(STDOUT_FILENO, &filename[i], 1);
-	write(STDOUT_FILENO, ": not found\n", _strlen(": not found\n"));
+		write(STDERR_FILENO, &filename[i], 1);
+	write(STDERR_FILENO, ": not found\n", _strlen(": not found\n"));
 	return (NULL);
 }

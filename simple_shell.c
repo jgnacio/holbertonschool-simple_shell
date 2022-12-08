@@ -20,18 +20,18 @@ void sighandler(int signum);
 int main(int __attribute__ ((unused)) ac, char **av)
 {
 	int child_pid, status;
-	size_t len = 0, check_getline;
+	int len = 0, check_getline;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
-	
+
 	signal(SIGINT, sighandler);
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
 
-		check_getline = getline(&str, &len, stdin);
+		check_getline = my_getline(&str, &len, STDIN_FILENO);
 
-		if (check_getline == (size_t) -1)
+		if (check_getline == -1)
 		{
 			freedom(1, &str);
 			break;

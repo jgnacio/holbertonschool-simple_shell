@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
-#include "main.h"
+#include <unistd.h>
 #include <signal.h>
+#include "main.h"
 
 /**
  * freedom - free multiple pointers
@@ -35,7 +36,7 @@ void freedom(unsigned int n, ...)
 /**
  * parse_str - parse a str into an array that execve understands
  * @s: string recieved by getline
- *
+ * @delim: str of delimiters
  * Return: NULL terminated array on success
  */
 
@@ -85,8 +86,10 @@ int in(char c, char *s)
 }
 
 /**
+ * sighandler - function used to handle Ctrl + C
+ * @sig: signal
  *
- *
+ * Return: void
  */
 void sighandler(__attribute__ ((unused)) int sig)
 {

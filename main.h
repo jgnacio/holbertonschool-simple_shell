@@ -1,15 +1,10 @@
 #ifndef SHELL_H
 #define SHELL_H
-#include <unistd.h>
-#include <string.h>
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <stdarg.h>
-#include <stddef.h>
-#include "strings.h"
 
 extern char **environ;
+
 /**
  * struct list_s - singly linked list
  * @str: string - (malloc'ed string)
@@ -18,12 +13,14 @@ extern char **environ;
  *
  * Description: singly linked list node structure
  */
+
 typedef struct list_s
 {
 	char *str;
 	unsigned int len;
 	struct list_s *next;
 } list_t;
+
 
 /* Prototypes */
 int find_char(char *string, char searched_char);
@@ -37,5 +34,7 @@ void free_list(list_t *head);
 void freedom(unsigned int n, ...);
 char **parse_str(char *s, char *delim);
 int in(char c, char *s);
+char * str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
+int64_t my_getline(char **lineptr, int *n, int fd);
 
 #endif

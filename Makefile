@@ -1,5 +1,5 @@
 CC = gcc
-SRC = simple_shell.c get_path.c strings.c node_functions.c aux_functions.c getline.c
+SRC = simple_shell.c get_path.c strings.c node_functions.c aux_functions.c getline.c built-in.c
 DEPS = path.h strings.h node.h
 NAME = hsh
 CFLAGS = -Wall -Werror -Wextra -pedantic -std=gnu89 -g

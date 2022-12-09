@@ -153,8 +153,14 @@ char *path_verify(char **ar_path, char *filename, char *exec_name)
 		return (NULL);
 
 	if (stat(filename, &check) == 0)
-	{	buf = _strdup(filename);
-		return (buf);
+	{
+		if (S_ISREG(check.st_mode) && !access(filename, X_OK))
+		{
+			buf = _strdup(filename);
+			return (buf);
+		}
+		dprintf(STDERR_FILENO, "Passed filename isn't a regular file\n");
+		return (NULL);
 	}
 
 	for (i = 1; ar_path[i]; i++)
@@ -163,16 +169,14 @@ char *path_verify(char **ar_path, char *filename, char *exec_name)
 		if (!buf)
 			return (NULL);
 		if (stat(buf, &check) == 0)
-			return (buf);
+		{
+			if (S_ISREG(check.st_mode) && !access(buf, X_OK))
+				return (buf);
+			dprintf(STDERR_FILENO, "Passed filename isn't a regular file\n");
+			return (NULL);
+		}
 		free(buf);
 	}
-	for (i = 0; exec_name[i]; i++)
-		write(STDERR_FILENO, &exec_name[i], 1);
-
-	write(STDERR_FILENO, ": 1: ", _strlen(": 1: "));
-
-	for (i = 0; filename[i]; i++)
-		write(STDERR_FILENO, &filename[i], 1);
-	write(STDERR_FILENO, ": not found\n", _strlen(": not found\n"));
+	dprintf(STDERR_FILENO, "%s: 1: %s: not found\n", exec_name, filename);
 	return (NULL);
 }

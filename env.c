@@ -73,7 +73,7 @@ int _atoi(char *s)
 		else
 		{
 			write(STDOUT_FILENO, "Can't atoi a non-numeric char\n",
-					_strlen("Can't atoi a non-numeric char\n");
+					_strlen("Can't atoi a non-numeric char\n"));
 			exit(97);
 		}
 	}

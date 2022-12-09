@@ -55,23 +55,11 @@ int main(int __attribute__ ((unused)) ac, char **av)
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
 		ar[0] = path_verify(a_path, ar[0], av[0]);
-		if (!ar[0])
-		{
-			freedom(4, &str, &ar, &a_path[0], &a_path);
-			continue;
-		}
 
-		child_pid = fork();
-		if (child_pid != 0)
-			wait(&status);
-		else
+		if (ar[0])
 		{
-			if (execve(ar[0], ar, environ) == -1)
-			{
-				write(STDERR_FILENO, "File passed is not an executable\n", 34);
-				freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
-				break;
-			}
+			child_pid = fork();
+			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
 		}
 		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}

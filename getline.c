@@ -33,6 +33,8 @@ int64_t my_getline(char **lineptr, int *n, int fd)
 		return (-1);
 	}
 	check_read = read(fd, buffer, GL_BUFFER);
+	*lineptr = buffer, *n = GL_BUFFER;
+
 	if (check_read == (size_t) -1 || check_read == 0)
 		return (-1);
 	for (i = 1; check_read == GL_BUFFER; i++)
@@ -96,5 +98,4 @@ char *str_realloc(char *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (res);
 }
-
 

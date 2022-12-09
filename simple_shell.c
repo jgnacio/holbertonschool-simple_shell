@@ -20,7 +20,7 @@ void sighandler(int signum);
 int main(int __attribute__ ((unused)) ac, char **av)
 {
 	int child_pid, status;
-	int len = 0, check_getline;
+	int len = 0, check_getline, exit_status = 0;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
 	signal(SIGINT, sighandler);
@@ -40,20 +40,27 @@ int main(int __attribute__ ((unused)) ac, char **av)
 		ar = parse_str(str, " \t\n");
 		if (_strcmp(ar[0], "exit") == 0)
 		{
+			if (ar[1])
+				exit_status = _atoi(ar[1]);
 			freedom(2, &str, &ar);
-			break;
+			exit(exit_status);
+		}
+
+		else if (_strcmp(ar[0], "env") == 0)
+		{
+			print_env(environ);
+			freedom(2, &str, &ar);
+			continue;
 		}
 
 		a_path = parse_env_variable(find_env_variable("PATH="));
 		ar[0] = path_verify(a_path, ar[0], av[0]);
-		if (!ar[0])
-		{
-			freedom(4, &str, &ar, &a_path[0], &a_path);
-			continue;
-		}
 
-		child_pid = fork();
-		(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
+		if (ar[0])
+		{
+			child_pid = fork();
+			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
+		}
 		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}
 	return (0);

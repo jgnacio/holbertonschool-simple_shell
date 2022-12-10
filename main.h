@@ -21,10 +21,23 @@ typedef struct list_s
 	struct list_s *next;
 } list_t;
 
+/**
+ * built_s - structure to identify which function to execute for your id.
+ * @id: function identifier.
+ * @funct: pointer to function that return a char **.
+ * @vfunct: pointer to function that return nothing.
+ */
+typedef struct built_s
+{
+	char *id;
+	char **(*funct)();
+	void (*vfunct)();
+	int (*ifunct)();
+} built_t;
 
 /* Prototypes */
 int find_char(char *string, char searched_char);
-char *find_env_variable(char *searched_var);
+char *find_env_variable(char *searched_var, int *index);
 char **parse_env_variable(char *var);
 char *path_verify(char **ar_path, char *filename, char *exec_name);
 char *mstr_concat(int cnt_str, char *s1, ...);
@@ -34,9 +47,13 @@ void free_list(list_t *head);
 void freedom(unsigned int n, ...);
 char **parse_str(char *s, char *delim);
 int in(char c, char *s);
-char *str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
+char * str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
 int64_t my_getline(char **lineptr, int *n, int fd);
 int print_env(char **env);
 int _atoi(char *s);
+void sighandler(int signum);
+char **set_env(char *v_name, char *v_value);
+char **unset_env(char *v_name);
+int builtin(char **ar);
 
 #endif

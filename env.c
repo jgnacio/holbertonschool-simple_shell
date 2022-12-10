@@ -1,5 +1,6 @@
-#include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "strings.h"
 
 /**
@@ -37,10 +38,7 @@ int print_env(char **env)
 	int i;
 
 	for (i = 0; env[i]; i++)
-	{
-		_puts(STDOUT_FILENO, env[i]);
-		write(STDOUT_FILENO, "\n", 1);
-	}
+		dprintf(STDOUT_FILENO, "%s\n", env[i]);
 
 	return (0);
 }
@@ -72,8 +70,7 @@ int _atoi(char *s)
 			res = res * 10 + (s[i] - '0');
 		else
 		{
-			write(STDOUT_FILENO, "Can't atoi a non-numeric char\n",
-					_strlen("Can't atoi a non-numeric char\n"));
+			dprintf(STDOUT_FILENO, "Can't atoi a non-numeric char\n");
 			exit(97);
 		}
 	}

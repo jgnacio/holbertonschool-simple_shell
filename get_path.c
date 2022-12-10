@@ -66,7 +66,7 @@ int find_char(char *string, char searched_char)
  * Return: the found string
  */
 
-char *find_env_variable(char *searched_var)
+char *find_env_variable(char *searched_var, int *index)
 {
 	int i, j;
 
@@ -77,7 +77,10 @@ char *find_env_variable(char *searched_var)
 			return (NULL);
 
 		if (_strncmp(environ[i], searched_var, (unsigned int) j) == 0)
+		{
+			*index = i;
 			return (environ[i]);
+		}
 	}
 
 	return (NULL);

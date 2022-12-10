@@ -83,7 +83,7 @@ void cd_fun(void)
 
 char **unset_env(char *v_name)
 {
-	dprintf(STDOUT_FILENO, "unset: %s\n", v_name);
+	fprintf(stdout, "unset: %s\n", v_name);
 	return (NULL);
 }
 

@@ -165,7 +165,7 @@ char *path_verify(char **ar_path, char *filename, char *exec_name)
 			buf = _strdup(filename);
 			return (buf);
 		}
-		dprintf(STDERR_FILENO, "Passed filename isn't a regular file\n");
+		fprintf(stderr, "Passed filename isn't a regular file\n");
 		return (NULL);
 	}
 
@@ -178,11 +178,11 @@ char *path_verify(char **ar_path, char *filename, char *exec_name)
 		{
 			if (S_ISREG(check.st_mode) && !access(buf, X_OK))
 				return (buf);
-			dprintf(STDERR_FILENO, "Passed filename isn't a regular file\n");
+			fprintf(stderr, "Passed filename isn't a regular file\n");
 			return (NULL);
 		}
 		free(buf);
 	}
-	dprintf(STDERR_FILENO, "%s: 1: %s: not found\n", exec_name, filename);
+	fprintf(stderr, "%s: 1: %s: not found\n", exec_name, filename);
 	return (NULL);
 }

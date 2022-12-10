@@ -38,7 +38,7 @@ int print_env(char **env)
 	int i;
 
 	for (i = 0; env[i]; i++)
-		dprintf(STDOUT_FILENO, "%s\n", env[i]);
+		fprintf(stdout, "%s\n", env[i]);
 
 	return (0);
 }
@@ -70,8 +70,8 @@ int _atoi(char *s)
 			res = res * 10 + (s[i] - '0');
 		else
 		{
-			dprintf(STDOUT_FILENO, "Can't atoi a non-numeric char\n");
-			exit(97);
+			fprintf(stdout, "Can't atoi a non-numeric char\n");
+			exit(0);
 		}
 	}
 	return (res * neg);

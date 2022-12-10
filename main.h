@@ -22,10 +22,11 @@ typedef struct list_s
 } list_t;
 
 /**
- * built_s - structure to identify which function to execute for your id.
+ * struct built_s - structure to identify which function to execute for your id
  * @id: function identifier.
  * @funct: pointer to function that return a char **.
  * @vfunct: pointer to function that return nothing.
+ * @ifunct: pointer to funct that returns an int.
  */
 typedef struct built_s
 {
@@ -47,7 +48,7 @@ void free_list(list_t *head);
 void freedom(unsigned int n, ...);
 char **parse_str(char *s, char *delim);
 int in(char c, char *s);
-char * str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
+char *str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
 int64_t my_getline(char **lineptr, int *n, int fd);
 int print_env(char **env);
 int _atoi(char *s);

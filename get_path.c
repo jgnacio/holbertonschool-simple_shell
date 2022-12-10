@@ -63,6 +63,9 @@ int find_char(char *string, char searched_char)
  * find_env_variable - find a variable in environ
  * @searched_var: searched variable ('key', if the string is
  * 'key=value')
+ * @index: pointe to int that whill be changed to the
+ * index in the array where the variable lies
+ *
  * Return: the found string
  */
 

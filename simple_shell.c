@@ -23,11 +23,9 @@ int main(int __attribute__ ((unused)) ac, char **av)
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
 	signal(SIGINT, sighandler);
-
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
-
 		check_getline = my_getline(&str, &len, STDIN_FILENO);
 
 		if (check_getline == -1)
@@ -35,9 +33,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			freedom(1, &str);
 			break;
 		}
-
 		ar = parse_str(str, " \t\n");
-
 		built_stat = builtin(ar);
 		if (built_stat != 0)
 		{
@@ -51,14 +47,13 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			freedom(2, &str, &ar);
 			continue;
 		}
-
 		a_path = parse_env_variable(find_env_variable("PATH=", &index));
-    ar[0] = path_verify(a_path, ar[0], av[0]);
-    if (ar[0])
-    {
+		ar[0] = path_verify(a_path, ar[0], av[0]);
+		if (ar[0])
+		{
 			child_pid = fork();
 			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
-    }
+		}
 		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}
 	return (0);

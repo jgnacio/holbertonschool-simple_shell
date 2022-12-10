@@ -4,17 +4,20 @@
 #include "strings.h"
 
 void exit_(char *, char *);
-void cd_fun();
+void cd_fun(void);
+
 /**
+ * builtin - defines which built in should be executed
+ * @ar: array of commands
  *
- *
+ * Return: -1 if exit built-in should be executed, 1 if
+ * built-in function returns void. Else 0.
  */
 int builtin(char **ar)
 {
 	int i, cnt_ar;
-	built_t a_built[] =
-	{
-		{"exit", NULL, NULL ,NULL},
+	built_t a_built[] = {
+		{"exit", NULL, NULL, NULL},
 		{"setenv", set_env, NULL, NULL},
 		{"unsetenv", unset_env, NULL, NULL},
 		{"env", NULL, NULL, print_env},
@@ -23,14 +26,14 @@ int builtin(char **ar)
 	};
 
 	for (cnt_ar = 0; ar[cnt_ar]; cnt_ar++)
-		;
+		continue;
 
 	for (i = 0; a_built[i].id; i++)
 	{
 		if (_strcmp(a_built[i].id, ar[0]) == 0)
 		{
 			/* this case is for exit built-in */
-			if (!(a_built[i].funct) && !(a_built[i].vfunct) && !(a_built[i].ifunct)) 
+			if (!(a_built[i].funct) && !(a_built[i].vfunct) && !(a_built[i].ifunct))
 				return (-1);
 			/* this case are for functions that return nothing */
 			else if (a_built[i].vfunct)
@@ -52,22 +55,46 @@ int builtin(char **ar)
 					a_built[i].ifunct(environ);
 					break;
 			}
-			return(1);
+			return (1);
 		}
 	}
 	return (0);
 }
 
-void cd_fun()
+
+/**
+ * cd_fun - write cd_fun to stdout
+ *
+ * Return: void
+ */
+
+void cd_fun(void)
 {
 	write(STDOUT_FILENO, &"cd_fun\n", 7);
 }
+
+
+/**
+ * unset_env - remove a variable from the environment
+ * @v_name: variable to remove
+ *
+ * Return: pointer to new array (environ)
+ */
 
 char **unset_env(char *v_name)
 {
 	dprintf(STDOUT_FILENO, "unset: %s\n", v_name);
 	return (NULL);
 }
+
+
+/**
+ * set_env - add (or modify) a variable in the environment
+ * @v_name: name (key)
+ * @v_value: value
+ *
+ * Return: pointer to variable
+ */
 
 char **set_env(char *v_name, char *v_value)
 {

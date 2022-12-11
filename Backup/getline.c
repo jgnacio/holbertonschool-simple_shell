@@ -15,7 +15,7 @@
  * Return: number of chars read
  */
 
-int my_getline(char **lineptr, int *n, int fd)
+int64_t my_getline(char **lineptr, int *n, int fd)
 {
 	int i = 1;
 	size_t check_read;

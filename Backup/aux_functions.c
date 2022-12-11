@@ -1,3 +1,4 @@
+#include <stdarg.h>
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
@@ -6,51 +7,29 @@
 #include "main.h"
 
 /**
- * free5 - free up to three strings and two arrays
- * @s1: string 1
- * @s2: string 2
- * @s3: string 3
- * @ar1: array 1
- * @ar2: array 2
+ * freedom - free multiple pointers
+ * @n: number of pointers to free
  *
  * Return: void
  * Note: the function recieves the address of
  * the pointers it must free
  */
 
-void free5(char **s1, char **s2, char **s3, char ***ar1, char ***ar2)
+void freedom(unsigned int n, ...)
 {
-	if (s1)
-	{
-		if (*s1)
-			free(*s1);
-		*s1 = NULL;
-	}
-	if (s2)
-	{
-		if (*s2)
-			free(*s2);
-		*s2 = NULL;
-	}
-	if (s3)
-	{
-		if (*s3)
-			free(*s3);
-		*s3 = NULL;
-	}
-	if (ar1)
-	{
-		if (*ar1)
-			free(*ar1);
-		*ar1 = NULL;
-	}
-	if (ar2)
-	{
-		if (*ar2)
-			free(*ar2);
-		*ar2 = NULL;
-	}
+	unsigned int i;
+	void **p = NULL;
+	va_list ap;
 
+	va_start(ap, n);
+	for (i = 0; i < n; i++)
+	{
+		p = (void **) va_arg(ap, void **);
+		if (*p != NULL)
+			free(*p);
+		*p = NULL;
+	}
+	va_end(ap);
 }
 
 
@@ -116,4 +95,3 @@ void sighandler(__attribute__ ((unused)) int sig)
 {
 	write(STDOUT_FILENO, &"\n$ ", 3);
 }
-

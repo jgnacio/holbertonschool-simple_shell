@@ -30,7 +30,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 
 		if (check_getline == -1)
 		{
-			free(str), str = NULL;
+			freedom(1, &str);
 			break;
 		}
 		ar = parse_str(str, " \t\n");
@@ -41,20 +41,20 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			{
 				if (ar[1])
 					exit_status = _atoi(ar[1]);
-				free5(&str, NULL, NULL, &ar, NULL);
+				freedom(2, &str, &ar);
 				exit(exit_status);
 			}
-			free5(&str, NULL, NULL, &ar, NULL);
+			freedom(2, &str, &ar);
 			continue;
 		}
 		a_path = parse_env_variable(find_env_variable("PATH=", &index));
-		ar[0] = check_existance(a_path, ar[0], av[0]);
+		ar[0] = path_verify(a_path, ar[0], av[0]);
 		if (ar[0])
 		{
 			child_pid = fork();
 			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
 		}
-		free5(&str, &ar[0], &a_path[0], &a_path, &ar);
+		freedom(5, &str, &ar[0], &a_path[0], &a_path, &ar);
 	}
 	return (0);
 }

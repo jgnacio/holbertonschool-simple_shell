@@ -40,20 +40,21 @@ typedef struct built_s
 int find_char(char *string, char searched_char);
 char *find_env_variable(char *searched_var, int *index);
 char **parse_env_variable(char *var);
+char *path_verify(char **ar_path, char *filename, char *exec_name);
+char *mstr_concat(int cnt_str, char *s1, ...);
 list_t *add_node_end(list_t **head, char *str);
 list_t *makenode(char *str);
 void free_list(list_t *head);
-void free5(char **s1, char **s2, char **s3, char ***ar1, char ***ar2);
+void freedom(unsigned int n, ...);
 char **parse_str(char *s, char *delim);
 int in(char c, char *s);
 char *str_realloc(char *ptr, unsigned int old_size, unsigned int new_size);
-int my_getline(char **lineptr, int *n, int fd);
+int64_t my_getline(char **lineptr, int *n, int fd);
 int print_env(char **env);
 int _atoi(char *s);
 void sighandler(int signum);
 char **set_env(char *v_name, char *v_value);
 char **unset_env(char *v_name);
 int builtin(char **ar);
-char *check_existance(char **ar_path, char *filename, char *exec_name);
 
 #endif

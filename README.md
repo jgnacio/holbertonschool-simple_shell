@@ -21,6 +21,73 @@ To exit the shell in interactive mode, two main options are available: (1) type 
 To run the *hsh* on your console, simply *clone* or *fork* the repository. The `Makefile` in the repository contains the recommened compiler and flags used in compilation. To compile the program, simply type `make` in the command line. Once compiled, the shell can be run in interactive mode by running `./hsh`, or non interactively by running `echo "command" | ./hsh`. If additional scrutiny is desired, the command `make run` will run the created executable with `valgrind` to detect memory leaks and aditional errors. 
 
 
+## FILES USED AND CONTENTS
+
+### Source Files
+- simple_shell.c: runs the hsh program
+- get_path.c: functions used to obtain the PATH from the environment, to search for the commands passed in those thirectories.
+- strings.c: string functions used, execpt `srttok`, which is taken from the `<string.h>` library.
+- node_functions.c: functions used to create and free a link list, used in the get_path.c source file.
+- getline.c: our own implementation of the getline function, used in the simple_shell.c program.
+- env.c: creates the env built-in.
+- aux_functions.c: auxilliary functions used. Principally to free multiple variables, to tokenize a string, and to manage the `Ctrl C` (SIGINT) signal.
+- built-in.c: function to implement different built ins in a conscice manner. Used in simple_shell.c
+
+
+### Heders
+- main.h: main header for the `hsh` project. Contains all structures used and most function prototypes.
+- strings.h: contains the prototypes of string functions used in the project (except `strtok`). 
+
+
+### Other
+- man_1_simple_shell: manual page for the `hsh`. Usage: `man ./man_1_simple_shell`
+- AUTHORS: contains information on all contributors to the project.
+- Makefile: contains a makefile, for easy compilation and for running on interactive mode with memcheck.
+
+
+
+## NOTES ON COMPILATION
+In testing, all files were compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89 -g. These flags are present in the Makefile.
+
+
+## List of allowed functions and syscalls
+- `access` (man 2 access)
+- `chdir` (man 2 chdir)
+- `close` (man 2 close)
+- `closedir` (man 3 closedir)
+- `execve` (man 2 execve)
+- `exit` (man 3 exit)
+- `\_exit` (man 2 \_exit)
+- `fflush` (man 3 fflush)
+- `fork` (man 2 fork)
+- `free` (man 3 free)
+- `getcwd` (man 3 getcwd)
+- `getline` (man 3 getline)
+- `getpid` (man 2 getpid)
+- `isatty` (man 3 isatty)
+- `kill` (man 2 kill)
+- `malloc` (man 3 malloc)
+- `open` (man 2 open)
+- `opendir` (man 3 opendir)
+- `perror` (man 3 perror)
+- `printf` (man 3 printf)
+- `fprintf` (man 3 fprintf)
+- `vfprintf` (man 3 vfprintf)
+- `sprintf` (man 3 sprintf)
+- `putchar` (man 3 putchar)
+- `read` (man 2 read)
+- `readdir` (man 3 readdir)
+- `signal` (man 2 signal)
+- `stat` (\_\_xstat) (man 2 stat)
+- `lstat` (\_\_lxstat) (man 2 lstat)
+- `fstat` (\_\_fxstat) (man 2 fstat)
+- `strtok` (man 3 strtok)
+- `wait` (man 2 wait)
+- `waitpid` (man 2 waitpid)
+- `wait3` (man 2 wait3)
+- `wait4` (man 2 wait4)
+- `write` (man 2 write)
+
 ## USAGE AND EXAMPLES
 
 #### Interactive Mode Example

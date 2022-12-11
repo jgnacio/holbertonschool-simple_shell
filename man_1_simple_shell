@@ -22,6 +22,58 @@ To exit the shell, two main options are available: (1) type exit (+ Carriage Ret
 To run the hsh on your console, simply clone or fork the repository. The Makefile in the repository contains the recommened compiler and flags used in compilation. To compile the program, simply type make in the command line. Once compiled, the shell can be run in interactive mode by running ./hsh, or non interactively by running: `echo "command" | ./hsh`. If additional scrutiny is desired, the command make run will run the created executable with valgrind to detect memory leaks and aditional errors.
 
 
+.SH FILES USED AND CONTENTS
+.SH Source files
+
+.IP simple_shell.c
+Runs the hsh program
+
+.IP get_path.c
+Functions used to obtain the PATH from the environment, to search for the commands passed in those directories
+
+.IP strings.c
+String functions used, execpt srttok, which is taken from the <string.h> library.
+
+.IP node_functions.c
+Functions used to create and free a link list, used in the get_path.c source file.
+
+.IP getline.c
+Our own implementation of the getline function, used in the simple_shell.c program.
+
+.IP env.c
+Creates the env built-in.
+
+.IP aux_functions.c
+Auxilliary functions used. Principally to free multiple variables, to tokenize a string, and to manage the Ctrl C (SIGINT) signal.
+
+.IP built-in.c
+Function to implement different built ins in a conscice manner. Used in simple_shell.c
+
+
+.SH Heders
+.IP main.h
+Main header for the hsh project. Contains all structures used and most function prototypes
+
+.IP strings.h
+Contains the prototypes of string functions used in the project (except strtok)
+
+
+.SH Other
+.IP man_1_simple_shell
+Manual page for the hsh. Usage: man ./man_1_simple_shell
+
+.IP AUTHORS
+Contains information on all contributors to the project.
+
+.IP Makefile
+Contains a makefile, for easy compilation and for running on interactive mode with memche
+
+
+
+.SH NOTES ON COMPILATION
+In testing, all files were compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89 -g. These flags are present in the Makefile.
+
+
 .SH USAGE AND EXAMPLES
 
 

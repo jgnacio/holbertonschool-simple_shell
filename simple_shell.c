@@ -25,7 +25,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 	signal(SIGINT, sighandler);
 	while (1)
 	{
-		write(STDOUT_FILENO, "$ ", 2);
+		(isatty(STDIN_FILENO)) ? write(STDOUT_FILENO, "$ ", 2) : 0;
 		check_getline = my_getline(&str, &len, STDIN_FILENO);
 
 		if (check_getline == -1)
@@ -33,7 +33,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			free(str), str = NULL;
 			break;
 		}
-		ar = parse_str(str, " \t\n");
+		ar = parse_str(str, " \\\t\n");
 		built_stat = builtin(ar);
 		if (built_stat != 0)
 		{
@@ -52,7 +52,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 		if (ar[0])
 		{
 			child_pid = fork();
-			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
+			(child_pid == 0) ? wait(&status) : execve(ar[0], ar, environ);
 		}
 		free5(&str, &ar[0], &a_path[0], &a_path, &ar);
 	}

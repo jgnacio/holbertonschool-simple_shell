@@ -19,7 +19,7 @@
 int main(int __attribute__ ((unused)) ac, char **av)
 {
 	int child_pid, status, built_stat, index = 0, exit_status = 0,
-			check_getline = 0;
+			check_getline = 0, i = 1;
 	size_t len = 0;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
@@ -49,13 +49,14 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			continue;
 		}
 		a_path = parse_env_variable(find_env_variable("PATH=", &index));
-		ar[0] = check_existance(a_path, ar[0], av[0]);
+		ar[0] = check_existance(a_path, ar[0], av[0], i);
 		if (ar[0])
 		{
 			child_pid = fork();
-			(child_pid == 0) ? wait(&status) : execve(ar[0], ar, environ);
+			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
 		}
 		free5(&str, &ar[0], &a_path[0], &a_path, &ar);
+		i++;
 	}
 	return (0);
 }

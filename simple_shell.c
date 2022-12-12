@@ -18,8 +18,9 @@
 
 int main(int __attribute__ ((unused)) ac, char **av)
 {
-	int child_pid, status, built_stat, index = 0, exit_status = 0;
-	size_t len = 0, check_getline;
+	int child_pid, status, built_stat, index = 0, exit_status = 0,
+			check_getline = 0;
+	size_t len = 0;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
 	signal(SIGINT, sighandler);
@@ -28,7 +29,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 		(isatty(STDIN_FILENO)) ? write(STDOUT_FILENO, "$ ", 2) : 0;
 		check_getline = getline(&str, &len, stdin);
 
-		if (check_getline == (size_t) - 1)
+		if (check_getline == -1)
 		{
 			free(str), str = NULL;
 			break;

@@ -37,7 +37,7 @@ char *check_existance(char **ar_path, char *filename,
 		{
 			if (S_ISREG(check.st_mode) /*&& !access(res, X_OK)*/)
 				return (res);
-			fprintf(stderr, "%s: %d: %s: command not found\n",
+			fprintf(stderr, "%s: %d: %s: not found\n",
 					exec_name, index, filename);
 			return (NULL);
 		}
@@ -51,13 +51,13 @@ char *check_existance(char **ar_path, char *filename,
 			res = _strdup(filename);
 			return (res);
 		}
-		fprintf(stderr, "%s: %d: %s: command not found\n",
+		fprintf(stderr, "%s: %d: %s: not found\n",
 				exec_name, index, filename);
 
 		return (NULL);
 	}
 
-	fprintf(stderr, "%s: %d: %s: command not found\n",
+	fprintf(stderr, "%s: %d: %s: not found\n",
 			exec_name, index, filename);
 	return (NULL);
 }

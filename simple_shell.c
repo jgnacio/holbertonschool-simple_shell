@@ -19,16 +19,16 @@
 int main(int __attribute__ ((unused)) ac, char **av)
 {
 	int child_pid, status, built_stat, index = 0, exit_status = 0;
-	int len = 0, check_getline;
+	size_t len = 0, check_getline;
 	char *str = NULL, **ar = NULL, **a_path = NULL;
 
 	signal(SIGINT, sighandler);
 	while (1)
 	{
 		(isatty(STDIN_FILENO)) ? write(STDOUT_FILENO, "$ ", 2) : 0;
-		check_getline = my_getline(&str, &len, STDIN_FILENO);
+		check_getline = getline(&str, &len, stdin);
 
-		if (check_getline == -1)
+		if (check_getline == (size_t) - 1)
 		{
 			free(str), str = NULL;
 			break;

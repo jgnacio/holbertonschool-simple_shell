@@ -54,6 +54,7 @@ void sighandler(int signum);
 char **set_env(char *v_name, char *v_value);
 char **unset_env(char *v_name);
 int builtin(char **ar);
-char *check_existance(char **ar_path, char *filename, char *exec_name, int index);
+char *check_existance(char **ar_path, char *filename,
+		char *exec_name, int index);
 
 #endif

@@ -27,10 +27,10 @@ char **parse_env_variable(char *var)
 			count_delim++;
 
 	ar = malloc(sizeof(char *) * (count_delim + 3));
-	tmp = strtok(str, ":=\n\\");
+	tmp = strtok(str, ":=");
 	i = 0;
 	ar[i++] = tmp;
-	for (tmp = strtok(NULL, ":\n\\"); tmp; tmp = strtok(NULL, ":\n\\"))
+	for (tmp = strtok(NULL, ":"); tmp; tmp = strtok(NULL, ":"))
 		ar[i++] = tmp;
 	ar[i] = NULL;
 

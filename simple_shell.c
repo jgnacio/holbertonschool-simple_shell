@@ -55,8 +55,7 @@ int main(int __attribute__ ((unused)) ac, char **av)
 			child_pid = fork();
 			(child_pid != 0) ? wait(&status) : execve(ar[0], ar, environ);
 		}
-		free5(&str, &ar[0], &a_path[0], &a_path, &ar);
-		i++;
+		free5(&str, &ar[0], &a_path[0], &a_path, &ar), i++;
 	}
 	return (0);
 }

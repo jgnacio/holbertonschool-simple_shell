@@ -18,30 +18,15 @@
  * Return: pathname that is executable by execve, or NULL if not found
  */
 
-char *check_existance(char **ar_path, char *filename, char *exec_name, int index)
+char *check_existance(char **ar_path, char *filename,
+		char *exec_name, int index)
 {
 	struct stat check;
 	char *res, *tmp;
-	/*
-	char *s = "Passed filename isn't a regular file with execution permission\n";
-	*/
 	int i;
 
 	if (!ar_path || !filename)
 		return (NULL);
-
-
-	if (stat(filename, &check) == 0)
-	{
-		if (S_ISREG(check.st_mode) && !access(filename, X_OK))
-		{
-			res = _strdup(filename);
-			return (res);
-		}
-		fprintf(stderr, "%s: %d: %s: command not found\n", exec_name, index, filename);
-
-		return (NULL);
-	}
 
 	for (i = 1; ar_path[i]; i++)
 	{
@@ -52,13 +37,28 @@ char *check_existance(char **ar_path, char *filename, char *exec_name, int index
 		{
 			if (S_ISREG(check.st_mode) /*&& !access(res, X_OK)*/)
 				return (res);
-			fprintf(stderr, "%s: %d: %s: command not found\n", exec_name, index, filename);
+			fprintf(stderr, "%s: %d: %s: command not found\n",
+					exec_name, index, filename);
 			return (NULL);
 		}
 		free(res);
 	}
-	fprintf(stderr, "%s: %d: %s: command not found\n", exec_name, index, filename);
+
+	if (stat(filename, &check) == 0)
+	{
+		if (S_ISREG(check.st_mode) && !access(filename, X_OK))
+		{
+			res = _strdup(filename);
+			return (res);
+		}
+		fprintf(stderr, "%s: %d: %s: command not found\n",
+				exec_name, index, filename);
+
+		return (NULL);
+	}
+
+	fprintf(stderr, "%s: %d: %s: command not found\n",
+			exec_name, index, filename);
 	return (NULL);
 }
-
 

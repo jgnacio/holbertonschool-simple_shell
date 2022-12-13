@@ -13,7 +13,7 @@ If the command isn't an existing pathname and can't be found, the program will s
 
 Some of the commands do not call *execve* and instead are built-ins. Examples of this are: the *env* command, which prints out the environment (same as *printenv*) and the *exit [status]* which exits the shell with an exit status inseted by the user, or 0 if no exit status is specified.  
 
-To exit the shell in interactive mode, two main options are available: (1) type `exit [status]` (+ Carriage Return) when prompted for an input, or (2) type `Ctrl + D`, which signifies an End of File (*EOF*). The shell **is** case sensitive (meaning that `EXIT` will be unrecognized, and won't exit the shell), but any spaces or tabs inserted before or after the typed command won't be registered. In interactive mode, the `Ctrl + C` input from the user sends a SIGINT signal which terminates a child process if one is executing, but it won't exit the shell.
+To exit the shell in interactive mode, two main options are available: (1) type `exit [status]` (+ Carriage Return) when prompted for an input, or (2) type `Ctrl + D`, which signifies an End of File (*EOF*). If `exit [status]`, *status* must be a positive int (numbers beyond 255 are accepted, but the program will perform a `[int] % 256` to the number recieved), otherwise an error message will be displayed and the shell won't exit. The shell **is** case sensitive (meaning that `EXIT` will be unrecognized, and won't exit the shell), but any spaces or tabs inserted before or after the typed command won't be registered. In interactive mode, the `Ctrl + C` input from the user sends a SIGINT signal which terminates a child process if one is executing, but it won't exit the shell.
 
 
 ## INSTALLATION
@@ -27,11 +27,10 @@ To run the *hsh* on your console, simply *clone* or *fork* the repository. The `
 - simple_shell.c: runs the hsh program
 - get_path.c: functions used to obtain the PATH from the environment, to search for the commands passed in those thirectories.
 - strings.c: string functions used, execpt `srttok`, which is taken from the `<string.h>` library.
-- node_functions.c: functions used to create and free a link list, used in the get_path.c source file.
-- getline.c: our own implementation of the getline function, used in the simple_shell.c program.
 - env.c: creates the env built-in.
 - aux_functions.c: auxilliary functions used. Principally to free multiple variables, to tokenize a string, and to manage the `Ctrl C` (SIGINT) signal.
 - built-in.c: function to implement different built ins in a conscice manner. Used in simple_shell.c
+- check_exists.c: function to verify if passed filename is a regular file
 
 
 ### Heders
@@ -43,6 +42,7 @@ To run the *hsh* on your console, simply *clone* or *fork* the repository. The `
 - man_1_simple_shell: manual page for the `hsh`. Usage: `man ./man_1_simple_shell`
 - AUTHORS: contains information on all contributors to the project.
 - Makefile: contains a makefile, for easy compilation and for running on interactive mode with memcheck.
+- Backup: directory with functions for future additions and backup of previous iteration. Includes a draft of our own getline, strtok, and implementations of linked list. Some of the functions and structs are included in main (although not used).
 
 
 

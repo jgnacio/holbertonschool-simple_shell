@@ -14,7 +14,7 @@ If the command isn't an existing pathname and can't be found, the program will s
 
 Some of the commands do not call execve and instead are built-ins. Examples of this are: the env command, which prints out the environment (same as printenv) and the exit [status] which exits the shell with an exit status inseted by the user, or 0 if no exit status is specified.
 
-To exit the shell, two main options are available: (1) type exit (+ Carriage Return) once prompted for an input, or (2) type Ctrl + D, which signifies an End of File (EOF). The shell is case sensitive, but any spaces or tabs inserted before or after the typed command won't be registered. The Ctrl + C input from the user terminates a child process if one is executing, but it won't exit the shell.
+To exit the shell, two main options are available: (1) type exit (+ Carriage Return) once prompted for an input, or (2) type Ctrl + D, which signifies an End of File (EOF). If exit [status], status must be a positive int (numbers beyond 255 are accepted, but the program will perform [% 256] to the number recieved), otherwise an error message will be displayed and the shell won't exit. The shell is case sensitive, but any spaces or tabs inserted before or after the typed command won't be registered. The Ctrl + C input from the user terminates a child process if one is executing, but it won't exit the shell.
 
 
 
@@ -34,11 +34,8 @@ Functions used to obtain the PATH from the environment, to search for the comman
 .IP strings.c
 String functions used, execpt srttok, which is taken from the <string.h> library.
 
-.IP node_functions.c
-Functions used to create and free a link list, used in the get_path.c source file.
-
-.IP getline.c
-Our own implementation of the getline function, used in the simple_shell.c program.
+.IP check_existance.c
+Function used to verify the passed filename corresponds to an executable, regular file.
 
 .IP env.c
 Creates the env built-in.
@@ -68,6 +65,8 @@ Contains information on all contributors to the project.
 .IP Makefile
 Contains a makefile, for easy compilation and for running on interactive mode with memche
 
+.IP Backup
+Directory for backup files and functions for future additions to the project. Include drafts for our own version of getline, strtok and functions to create and free linked lists.
 
 
 .SH NOTES ON COMPILATION
